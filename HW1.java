@@ -1,6 +1,6 @@
 
 /*
- * *** PLACE YOUR NAME / SECTION  HERE ***
+ * *** Zaki Khan / 272 001 ***
  *
  * Homework # 1 (Programming Assignment). This Java class defines some basic
  * manipulation operations on Linked-Lists and Stacks.
@@ -38,13 +38,12 @@ public class HW1 {
             int data;
             Node next;
 
-            Node(int d)  {        // Constructor
+            Node(int d) {
                 data = d;
                 next = null;
             }
         }
-        Node head;                // head of Linked-list
-
+        Node head;
 
         /*
          * Method sortedInsert() - this method will insert a new node to the
@@ -53,65 +52,69 @@ public class HW1 {
          * the linked-list.
          *
          */
-        public void sortedInsert ( int data ) {
+        public void sortedInsert(int data) {
             Node new_node = new Node(data);
-
             new_node.next = null;
 
-            // Special case for head node.
-            if (this.head == null || head.data >= new_node.data ) {
+            if (this.head == null || head.data >= new_node.data) {
                 new_node.next = head;
                 head = new_node;
             } else {
-                // locate the node before the point of insertion
                 Node current = this.head;
-
-                // Identify where to place the item to insert
                 while (current.next != null && current.next.data < data) {
                     current = current.next;
                 }
                 new_node.next = current.next;
                 current.next = new_node;
             }
-
-            return;
         }
-
 
         /*
          * Method removeElementsLT() - this method removes all nodes that contain a
          * value that is less than the provided parameter 'ltValue'.
          *
          * The method will invoke the method removeElements for each element
-         * found in the linked-list that is less than thr parameter value passed.
+         * found in the linked-list that is less than the parameter value passed.
          */
-        public void removeElementsLT ( int ltValue ) {
+        public void removeElementsLT(int ltValue) {
+            while (head != null && head.data < ltValue) {
+                head = head.next;
+            }
 
-            // YOUR CODE GOES HERE
-
-            return;
+            Node current = head;
+            while (current != null && current.next != null) {
+                if (current.next.data < ltValue) {
+                    current.next = current.next.next;
+                } else {
+                    current = current.next;
+                }
+            }
         }
-
 
         /*
          * Method removeElement() - this method removes all nodes that contain a
          * value equal to the value the provided parameter 'value'.
          */
+        public void removeElement(int value) {
+            while (head != null && head.data == value) {
+                head = head.next;
+            }
 
-        public void removeElement ( int value ) {
-
-            // YOUR CODE GOES HERE
-
-            return;
+            Node current = head;
+            while (current != null && current.next != null) {
+                if (current.next.data == value) {
+                    current.next = current.next.next;
+                } else {
+                    current = current.next;
+                }
+            }
         }
-
 
         /*
          * Method toString() - this is a helper method for printing / constructing
          * a string object from the linked-list.
          */
-        public String toString () // Method to output the LinkedList as a String
-        {
+        public String toString() {
             String output = "[";
             Node currNode = this.head;
             while (currNode != null) {
@@ -120,11 +123,7 @@ public class HW1 {
             }
             return output.trim() + "]";
         }
-
-    } // End class LinkedList
-
-
-
+    }
 
     /*
      * Class Stacks
@@ -143,7 +142,6 @@ public class HW1 {
      *                                     value 'k' (stack index starts at 0)
      *
      */
-
     static class Stacks {
 
         /*
@@ -156,14 +154,20 @@ public class HW1 {
          * The method should utilize the provided Stack class.
          */
         public static boolean isPalindrome(String input) {
-
             Stack<Character> stack = new Stack<>();
             input = input.toLowerCase().replaceAll("\\s+", "");
 
-            // Your CODE GOES HERE
-            return false;
-        }
+            for (char c : input.toCharArray()) {
+                stack.push(c);
+            }
 
+            StringBuilder reversed = new StringBuilder();
+            while (!stack.isEmpty()) {
+                reversed.append(stack.pop());
+            }
+
+            return input.equals(reversed.toString());
+        }
 
         /*
          * Method findLargestk() - This method will return the largest index
@@ -181,14 +185,26 @@ public class HW1 {
          * completed, place them all back in teh original stack.
          */
         public static int findLargestK(Stack<Integer> stack, int k) {
+            Stack<Integer> tempStack = new Stack<>();
+            int largestIndex = -1;
+            int currentIndex = 0;
 
-            // YOUR CODE GOES HERE
-            return -1;
+            while (!stack.isEmpty()) {
+                int value = stack.pop();
+                if (value == k) {
+                    largestIndex = currentIndex;
+                }
+                tempStack.push(value);
+                currentIndex++;
+            }
+
+            while (!tempStack.isEmpty()) {
+                stack.push(tempStack.pop());
+            }
+
+            return largestIndex;
         }
-
-    }  // End class Stacks
-
-
+    }
 
     /*******************************
      *
@@ -202,11 +218,11 @@ public class HW1 {
     public static int algorithmAnalysis1(int n, int m) {
         int a = 0, b = 0;
 
-        for (int i=0; i < n; i++)
-            a+= Math.random();
+        for (int i = 0; i < n; i++)
+            a += Math.random();
 
-        for (int j=0; j < m; j++)
-            b+= Math.random();
+        for (int j = 0; j < m; j++)
+            b += Math.random();
 
         /*
          * Select the correct option listed below:
@@ -219,15 +235,14 @@ public class HW1 {
         */
 
         // RETURN THE CORRECT OPTION NUMBER LISTED ABOVE
-        return -1;
+        return 3; // O(N + M) time, O(1) space
     }
-
 
     public static int algorithmAnalysis2(int n) {
         int i, j, k = 0;
-        for (i = n/2; i <= n; i++)
-            for ( j = 2; j <= n; j = j*2 )
-                k+= n/2;
+        for (i = n / 2; i <= n; i++)
+            for (j = 2; j <= n; j = j * 2)
+                k += n / 2;
 
         /*
          * Select the correct option listed below:
@@ -240,8 +255,7 @@ public class HW1 {
          */
 
         // RETURN THE CORRECT OPTION LISTED ABOVE
-        return -1;
+        return 2; // O(N log N) time
     }
-
 }
 
